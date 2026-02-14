@@ -1,3 +1,5 @@
+use tauri::menu::Menu;
+use tauri::menu::MenuItem;
 use tauri::tray::TrayIconBuilder;
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
@@ -10,7 +12,10 @@ pub fn run() {
     tauri::Builder::default()
         .setup(|app| {
             println!("Hello World");
+            let menu_quit = MenuItem::with_id(app, "quit", "Quit Program", true, None::<&str>)?;
+            let tray_menu = Menu::with_items(app, &[&menu_quit])?;
             let tray = TrayIconBuilder::new()
+                .menu(&tray_menu)
                 .icon(app.default_window_icon().unwrap().clone())
                 .build(app)?;
             Ok(())
