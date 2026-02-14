@@ -13,7 +13,9 @@ pub fn run() {
         .setup(|app| {
             println!("Hello World");
             let menu_quit = MenuItem::with_id(app, "quit", "Quit Program", true, None::<&str>)?;
-            let tray_menu = Menu::with_items(app, &[&menu_quit])?;
+            let create_window_menu =
+                MenuItem::with_id(app, "create_gui_window", "Options", true, None::<&str>)?;
+            let tray_menu = Menu::with_items(app, &[&create_window_menu, &menu_quit])?;
             let tray = TrayIconBuilder::new()
                 .menu(&tray_menu)
                 .icon(app.default_window_icon().unwrap().clone())
